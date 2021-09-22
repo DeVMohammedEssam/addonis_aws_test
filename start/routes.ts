@@ -19,7 +19,18 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import User from 'App/Models/user'
 
 Route.get('/', async () => {
   return { hello: 'world' }
+})
+
+Route.post('/user', async ({ request }) => {
+  const data = request.only(['email', 'password'])
+  let user = await User.create(data)
+  return await user.save()
+})
+
+Route.get('/user/all', async () => {
+  return await User.all()
 })
